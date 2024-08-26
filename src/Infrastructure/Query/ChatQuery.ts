@@ -6,7 +6,7 @@ class ChatQuery implements IChatQuery
 {
     async getChatByUserId(userId: string): Promise<Array<IChatDocument>> {
         const retrievedChats : Array<IChatDocument> = await ChatModel.find({$or: [{senderUserId: userId}, {receiverUserId: userId}]})
-        if(!retrievedChats) throw Error('No se encontraron chats');
+        if(!retrievedChats) throw Error('Chat not found');
         return retrievedChats;
     }    
 }

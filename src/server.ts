@@ -23,16 +23,28 @@ const chatQuery: IChatQuery = new ChatQuery();
 const chatServices: IChatServices = new ChatServices(chatCommand, chatQuery);
 
 io.on('connection',function (socket) {
-    socket.on('join', (chatId) => 
+    socket.on('join', async (chatId) => 
         {
-            console.log('Un usuario se unio a una sala');
-            socket.join(chatId);
+            console.log('A user joined a room');
+            socket.join(chatId);            
         })
     socket.on('msg', async (msg: IncomingMessageDTO, chatId: string) => 
-        {                    
+        {                                
             const createdMessage = await chatServices.sendMessage(msg);
-            socket.to(chatId).emit('msg', createdMessage);
+            const sockets = await io.in(chatId).fetchSockets();
+            // Si hay mas de un socket por mismo usuario puede generar duplicados
+            if(sockets.length > 1)
+                {                   
+                    // Tal vez es necesario eliminar la propiedad IsRead al enviarlo
+                    socket.to(chatId).emit('msg', createdMessage);
+                }
+            else
+            {
+                // TODO
+                // Crear notificacion en el microservicio de notificaciones
+            }
         })     
+    console.log('A user connected');
 })
 
 // Iniciamos el servidor en el puerto 3003
