@@ -6,6 +6,7 @@ import ChatCommand from "../../Infrastructure/Command/ChatCommand";
 import ChatController from "../Controllers/ChatController";
 import IChatServices from "../../Domain/Interfaces/IChatServices";
 import ChatServices from "../../Domain/Services/ChatServices";
+import { authenticateJwt } from "../Middleware/PassportMiddleware";
 
 
 
@@ -16,6 +17,6 @@ const chatController: ChatController = new ChatController(chatServices);
 const ChatRouter = Router();
 ChatRouter.post('/chat', chatController.createChat);
 ChatRouter.delete('/chat', chatController.deleteChat);
-ChatRouter.get('/chats', chatController.getChatsByUserId);
+ChatRouter.get('/chats', authenticateJwt, chatController.getChatsByUserId);
 
 export default ChatRouter;

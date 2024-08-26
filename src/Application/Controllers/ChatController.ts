@@ -20,7 +20,7 @@ class ChatController
             const { senderUserId, receiverUserId} : CreateChatRequest = req.body;
             const createChatRequest: CreateChatRequest = new CreateChatRequest(senderUserId, receiverUserId);
             const createdChat = await this.chatServices.createChat(createChatRequest);
-            res.status(200).send('Se creo el chat con exito');
+            res.status(200).send(createdChat.id); // Solo deberia ser utilizado por el microservicio de Intercambios
         }
         catch(error)
         {
@@ -33,7 +33,7 @@ class ChatController
         {
             const chatId  = req.params.chatId as string;
             await this.chatServices.deleteChat(chatId);
-            res.status(200).send('El chat se elimino con exito')
+            res.status(200).send('El chat se elimino con exito') // Solo deberia ser utilizado por el microservicio de Intercambios
         }
         catch(error)
         {
