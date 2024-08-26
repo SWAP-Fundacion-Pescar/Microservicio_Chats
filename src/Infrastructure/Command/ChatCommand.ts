@@ -1,3 +1,4 @@
+import NotFoundException from "../../Application/Exceptions/NotFoundException";
 import CreateChatRequest from "../../Application/Requests/CreateChatRequest";
 import NewMessageDTO from "../../Domain/DTO/NewMessageDTO";
 import Message from "../../Domain/Entities/Message";
@@ -13,14 +14,15 @@ class ChatCommand implements IChatCommand
     }
     async sendMessage(newMessageDTO: NewMessageDTO): Promise<Message> {
         const retrievedChat: IChatDocument | null = await ChatModel.findById(newMessageDTO.chatId);
-        if(!retrievedChat) throw new Error('No se encontro el chat');
+        if(!retrievedChat) throw new NotFoundException('No se encontro el chat');
         retrievedChat.messages.push(newMessageDTO.message);
         await retrievedChat.save();
         const retrievedMessage: Message = retrievedChat.messages[retrievedChat.messages.length - 1] 
         return retrievedMessage;
     }
     async deleteChat(chatId: string): Promise<void> {
-        await ChatModel.findByIdAndDelete(chatId);
+        const retrievedChat: IChatDocument | null = await ChatModel.findByIdAndDelete(chatId);
+        if(!retrievedChat) throw new NotFoundException('No se encontro el chat');        
     }    
 }
 export default ChatCommand;
