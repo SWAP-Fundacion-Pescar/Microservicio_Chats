@@ -3,8 +3,8 @@ class IncomingMessageDTO
     userId: string;
     chatId: string;
     content: string;
-    media?: File;
-    constructor(userId: string, chatId: string, content: string, media: File)
+    media?: DataView;
+    constructor(userId: string, chatId: string, content: string, media: DataView)
     {
         this.userId = userId;
         this.chatId = chatId;

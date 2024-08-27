@@ -6,6 +6,10 @@ import NewMessageDTO from "../DTO/NewMessageDTO";
 import Chat from "../Entities/Chat";
 import Message from "../Entities/Message";
 import IChatServices from "../Interfaces/IChatServices";
+import fs from 'fs';
+import { writeFile } from 'fs/promises';
+import path from 'path';
+import Media from "../Entities/Media";
 
 class ChatServices implements IChatServices
 {
@@ -21,8 +25,21 @@ class ChatServices implements IChatServices
         return createdChat;
     }
     async sendMessage(incomingMessageDTO: IncomingMessageDTO): Promise<Message> {
-        console.log(incomingMessageDTO);
         const message: Message = new Message(incomingMessageDTO.userId, incomingMessageDTO.content)
+        if(incomingMessageDTO.media)
+            {
+                const generatedName = `${Date.now()}` + `${incomingMessageDTO.chatId}` + '.jpg';
+                const baseDirectory = path.join(__dirname, `../../../../FrontEnd/public/chats/${incomingMessageDTO.chatId}`)
+                if(!fs.existsSync(baseDirectory))
+                    {
+                        fs.mkdirSync(baseDirectory);
+                    }                
+                let directory = path.join(baseDirectory, generatedName);
+                await writeFile(directory, incomingMessageDTO.media);
+                const url = `http://localhost:3000/chats/${incomingMessageDTO.chatId}/${generatedName}`;
+                const messageMedia: Media = new Media(url, 'image');
+                message.media = messageMedia;
+            }                           
         const newMessage: NewMessageDTO = new NewMessageDTO(incomingMessageDTO.chatId, message);
         const retrievedMessage: Message = await this.chatCommand.sendMessage(newMessage);
         return retrievedMessage;

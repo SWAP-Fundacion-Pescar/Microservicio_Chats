@@ -7,7 +7,7 @@ class Message
     createdAt?: Date;    
     isRead: boolean;
     media?: Media;
-    constructor(userId: string, content: string, createdAt?: Date, isRead?: boolean, media?: Media)
+    constructor(userId: string, content: string, media?: Media, createdAt?: Date, isRead?: boolean)
     {
         this.userId = userId;
         this.content = content;

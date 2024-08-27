@@ -11,6 +11,7 @@ import ChatQuery from "./Infrastructure/Query/ChatQuery";
 import passport from "./Infrastructure/Config/Passport";
 
 
+
 interface User
 {
     id: string;
@@ -36,14 +37,14 @@ const chatQuery: IChatQuery = new ChatQuery();
 const chatServices: IChatServices = new ChatServices(chatCommand, chatQuery);
 
 // Deberia utilizar el tipo correcto
-io.engine.use((req: any, res: any, next: any) => {
-    const isHandshake = req._query.sid === undefined;
-    if (isHandshake) {
-        passport.authenticate("jwt", { session: false })(req, res, next);
-    } else {
-        next();
-    }
-});
+// io.engine.use((req: any, res: any, next: any) => {
+//     const isHandshake = req._query.sid === undefined;
+//     if (isHandshake) {
+//         passport.authenticate("jwt", { session: false })(req, res, next);
+//     } else {
+//         next();
+//     }
+// });
 
 io.on('connection', function (socket) {
     console.log('A user connected');
@@ -57,7 +58,7 @@ io.on('connection', function (socket) {
         socket.join(chatId);
     })
     socket.on('msg', async (msg: IncomingMessageDTO, chatId: string) => {
-        const createdMessage = await chatServices.sendMessage(msg);
+        const createdMessage = await chatServices.sendMessage(msg);         
         const sockets = await io.in(chatId).fetchSockets();
         // Si hay mas de un socket por mismo usuario puede generar duplicados
         if (sockets.length > 1) {
