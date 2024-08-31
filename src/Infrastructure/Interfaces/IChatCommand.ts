@@ -8,5 +8,6 @@ interface IChatCommand
     createChat(createChatRequest: CreateChatRequest): Promise<IChatDocument>;
     sendMessage(newMessageDTO: NewMessageDTO): Promise<Message>;
     deleteChat(chatId: string): Promise<void>;
+    readMessage(indexMessage:number, chatId:string):Promise<void>;
 }
 export default IChatCommand;

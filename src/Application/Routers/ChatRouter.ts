@@ -18,5 +18,6 @@ const ChatRouter = Router();
 ChatRouter.post('/chat', chatController.createChat);
 ChatRouter.delete('/chat', chatController.deleteChat);
 ChatRouter.get('/chats', authenticateJwt, chatController.getChatsByUserId);
+ChatRouter.put('/chats/read', chatController.readMessage);
 
 export default ChatRouter;

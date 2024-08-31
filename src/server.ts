@@ -58,6 +58,7 @@ io.on('connection', function (socket) {
         socket.join(chatId);
     })
     socket.on('msg', async (msg: IncomingMessageDTO, chatId: string) => {
+        console.log(msg)
         const createdMessage = await chatServices.sendMessage(msg);         
         const sockets = await io.in(chatId).fetchSockets();
         // Si hay mas de un socket por mismo usuario puede generar duplicados

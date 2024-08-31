@@ -2,6 +2,7 @@ import {Request, Response, NextFunction} from 'express';
 import IChatServices from "../../Domain/Interfaces/IChatServices";
 import CreateChatRequest from '../Requests/CreateChatRequest';
 import Chat from '../../Domain/Entities/Chat';
+import ReadMessageRequest from '../Requests/ReadMessageRequest';
 
 class ChatController 
 {
@@ -11,7 +12,8 @@ class ChatController
         this.chatServices = chatServices;
         this.createChat = this.createChat.bind(this);
         this.deleteChat = this.deleteChat.bind(this);
-        this.getChatsByUserId = this.getChatsByUserId.bind(this);        
+        this.getChatsByUserId = this.getChatsByUserId.bind(this);     
+        this.readMessage = this.readMessage.bind(this);   
     }
     async createChat(req: Request, res: Response, next: NextFunction): Promise<void>
     {
@@ -50,6 +52,15 @@ class ChatController
         }
         catch(error)
         {
+            next(error);
+        }
+    }
+    async readMessage(req: Request, res: Response, next: NextFunction): Promise<void>{
+        try{
+            const {indexMessage, chatId} : ReadMessageRequest = req.body;
+            await this.chatServices.readMessage(indexMessage, chatId);
+            res.status(200).send('Ok.');
+        }catch (error){
             next(error);
         }
     }
