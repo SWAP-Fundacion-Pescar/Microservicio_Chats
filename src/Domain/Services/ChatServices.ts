@@ -49,7 +49,6 @@ class ChatServices implements IChatServices
         const dir = path.join(__dirname, `../../../../FrontEnd/public/chats/${chatId}`)
         if(fs.existsSync(dir))
             {
-                //{ recursive: true, force: true }
                 fs.readdirSync(dir).forEach(file=> { 
                     fs.rmSync(path.join(dir, file));
                 });
