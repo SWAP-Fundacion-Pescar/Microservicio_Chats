@@ -29,7 +29,8 @@ const io = new Server(server,
     {
         cors: {
             origin: "http://localhost:3009"
-        }
+        },
+        maxHttpBufferSize: 4e6 // 4Mb
     });
 
 const chatCommand: IChatCommand = new ChatCommand();
@@ -58,18 +59,17 @@ io.on('connection', function (socket) {
         socket.join(chatId);
     })
     socket.on('msg', async (msg: IncomingMessageDTO, chatId: string) => {
-        console.log(msg)
-        const createdMessage = await chatServices.sendMessage(msg);         
-        const sockets = await io.in(chatId).fetchSockets();
-        // Si hay mas de un socket por mismo usuario puede generar duplicados
-        if (sockets.length > 1) {
-            // Tal vez es necesario eliminar la propiedad IsRead al enviarlo
-            socket.to(chatId).emit('msg', createdMessage);
-        }
-        else {
-            // TODO
-            // Crear notificacion en el microservicio de notificaciones
-        }
+            const createdMessage = await chatServices.sendMessage(msg);         
+            const sockets = await io.in(chatId).fetchSockets();
+            // Si hay mas de un socket por mismo usuario puede generar duplicados
+            if (sockets.length > 1) {
+                // Tal vez es necesario eliminar la propiedad IsRead al enviarlo
+                socket.to(chatId).emit('msg', createdMessage);
+            }
+            else {
+                // TODO
+                // Crear notificacion en el microservicio de notificaciones
+            }
     })    
 })
 

@@ -16,7 +16,7 @@ const chatServices: IChatServices = new ChatServices(chatCommand, chatQuery);
 const chatController: ChatController = new ChatController(chatServices);
 const ChatRouter = Router();
 ChatRouter.post('/chat', chatController.createChat);
-ChatRouter.delete('/chat', chatController.deleteChat);
+ChatRouter.delete('/chat/:chatId', chatController.deleteChat);
 ChatRouter.get('/chats', authenticateJwt, chatController.getChatsByUserId);
 ChatRouter.put('/chats/read', chatController.readMessage);
 

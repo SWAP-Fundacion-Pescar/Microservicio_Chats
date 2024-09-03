@@ -47,9 +47,13 @@ class ChatServices implements IChatServices
     async deleteChat(chatId: string): Promise<void> {
         await this.chatCommand.deleteChat(chatId);
         const dir = path.join(__dirname, `../../../../FrontEnd/public/chats/${chatId}`)
-        if(!fs.existsSync(dir))
+        if(fs.existsSync(dir))
             {
-                fs.rmSync(dir, { recursive: true, force: true });
+                //{ recursive: true, force: true }
+                fs.readdirSync(dir).forEach(file=> { 
+                    fs.rmSync(path.join(dir, file));
+                });
+                fs.rmdirSync(dir);
             } 
     }
     async getChatByUserId(userId: string): Promise<Array<Chat>> {
