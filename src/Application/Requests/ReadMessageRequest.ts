@@ -1,10 +1,10 @@
 class ReadMessageRequest
 {
-    indexMessage: number;
+    messageId: string;
     chatId: string;
-    constructor(indexMessage: number, chatId: string)
+    constructor(messageId: string, chatId: string)
     {
-        this.indexMessage = indexMessage;
+        this.messageId = messageId;
         this.chatId = chatId;
     }
 }

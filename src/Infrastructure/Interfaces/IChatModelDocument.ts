@@ -1,10 +1,10 @@
-import { Document } from "mongoose";
-import Message from "../../Domain/Entities/Message";
+import { Document, Types } from "mongoose";
+import IMessageDocument from "./IMessageDocument";
 
 interface IChatDocument extends Document
 {
     senderUserId: string;
     receiverUserId: string;
-    messages: Array<Message>;
+    messages: Types.DocumentArray<IMessageDocument>;
 }
 export default IChatDocument;

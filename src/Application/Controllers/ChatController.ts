@@ -57,8 +57,8 @@ class ChatController
     }
     async readMessage(req: Request, res: Response, next: NextFunction): Promise<void>{
         try{
-            const {indexMessage, chatId} : ReadMessageRequest = req.body;
-            await this.chatServices.readMessage(indexMessage, chatId);
+            const {messageId, chatId} : ReadMessageRequest = req.body;
+            await this.chatServices.readMessage(messageId, chatId);
             res.status(200).send('Ok.');
         }catch (error){
             next(error);

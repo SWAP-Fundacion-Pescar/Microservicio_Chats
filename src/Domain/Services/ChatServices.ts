@@ -59,8 +59,8 @@ class ChatServices implements IChatServices
         const retrievedChats: Array<Chat> = await this.chatQuery.getChatByUserId(userId);
         return retrievedChats;
     }    
-    async readMessage(indexMessage:number, chatId:string): Promise<void>{
-        await this.chatCommand.readMessage(indexMessage, chatId);
+    async readMessage(messageId: string, chatId:string): Promise<void>{
+        await this.chatCommand.readMessage(messageId, chatId);
     }
 }
 export default ChatServices;

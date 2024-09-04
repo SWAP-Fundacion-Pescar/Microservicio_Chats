@@ -9,6 +9,6 @@ interface IChatServices
     sendMessage(incomingMessageDTO: IncomingMessageDTO): Promise<Message>;
     deleteChat(chatId: string): Promise<void>;
     getChatByUserId(userId: string): Promise<Array<Chat>>
-    readMessage(indexMessage:number, chatId:string): Promise<void>;
+    readMessage(messageId: string, chatId:string): Promise<void>;
 }
 export default IChatServices;
