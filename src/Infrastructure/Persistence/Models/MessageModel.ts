@@ -4,8 +4,9 @@ import IMediaDocument from "../../Interfaces/IMediaDocument";
 
 const mediaSchema: Schema<IMediaDocument> = new mongoose.Schema(
     {
+        _id: false,
         url: { type: String, required: true},
-        type: { type: String},
+        type: { type: String}        
     })
 
 const messageSchema: Schema<IMessageDocument> = new mongoose.Schema(
