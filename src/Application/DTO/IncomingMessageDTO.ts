@@ -2,7 +2,7 @@ class IncomingMessageDTO
 {
     userId: string;
     chatId: string;
-    content: string;
+    content?: string;
     media?: DataView;
     constructor(userId: string, chatId: string, content: string, media: DataView)
     {
