@@ -38,14 +38,14 @@ const chatQuery: IChatQuery = new ChatQuery();
 const chatServices: IChatServices = new ChatServices(chatCommand, chatQuery);
 
 // Deberia utilizar el tipo correcto
-// io.engine.use((req: any, res: any, next: any) => {
-//     const isHandshake = req._query.sid === undefined;
-//     if (isHandshake) {
-//         passport.authenticate("jwt", { session: false })(req, res, next);
-//     } else {
-//         next();
-//     }
-// });
+io.engine.use((req: any, res: any, next: any) => {
+    const isHandshake = req._query.sid === undefined;
+    if (isHandshake) {
+        passport.authenticate("jwt", { session: false })(req, res, next);
+    } else {
+        next();
+    }
+});
 
 io.on('connection', function (socket) {
     console.log('A user connected');

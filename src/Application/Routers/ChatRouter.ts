@@ -6,6 +6,7 @@ import ChatCommand from "../../Infrastructure/Command/ChatCommand";
 import ChatController from "../Controllers/ChatController";
 import IChatServices from "../../Domain/Interfaces/IChatServices";
 import ChatServices from "../../Domain/Services/ChatServices";
+import { validateCreateChat, validateReadMessage, validateDeleteChat } from "../Middleware/Validator/ChatValidator";
 import { authenticateJwt } from "../Middleware/PassportMiddleware";
 
 
@@ -15,9 +16,9 @@ const chatCommand: IChatCommand = new ChatCommand();
 const chatServices: IChatServices = new ChatServices(chatCommand, chatQuery);
 const chatController: ChatController = new ChatController(chatServices);
 const ChatRouter = Router();
-ChatRouter.post('/chat', chatController.createChat);
-ChatRouter.delete('/chat/:chatId', chatController.deleteChat);
+ChatRouter.post('/chat', validateCreateChat, chatController.createChat);
+ChatRouter.delete('/chat/:chatId', validateDeleteChat, chatController.deleteChat);
 ChatRouter.get('/chats/:userId', chatController.getChatsByUserId);
-ChatRouter.put('/chats/read', chatController.readMessage);
+ChatRouter.put('/chats/read', validateReadMessage, chatController.readMessage);
 
 export default ChatRouter;
