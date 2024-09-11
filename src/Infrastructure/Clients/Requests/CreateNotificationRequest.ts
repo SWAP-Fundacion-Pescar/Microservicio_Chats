@@ -7,7 +7,7 @@ class CreateNotificationRequest{
         this.userId=userId;
         this.content=content;
         this.type = type;
-        this.hasImage=hasImage;   
+        this.hasImage=hasImage ?? false;   
     }
 }
 export default CreateNotificationRequest; 

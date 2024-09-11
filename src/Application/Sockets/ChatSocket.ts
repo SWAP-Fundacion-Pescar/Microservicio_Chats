@@ -7,27 +7,30 @@ import IChatQuery from "../../Infrastructure/Interfaces/IChatQuery";
 import IChatServices from "../../Domain/Interfaces/IChatServices";
 import ChatServices from "../../Domain/Services/ChatServices";
 import IncomingMessageDTO from "../DTO/IncomingMessageDTO";
+import NotificationClientMicroservice from "../../Infrastructure/Clients/NotificationClient";
+import CreateNotificationRequest from "../../Infrastructure/Clients/Requests/CreateNotificationRequest";
+import UnauthorizedException from "../Exceptions/UnauthorizedException";
 
 
 const chatCommand: IChatCommand = new ChatCommand();
 const chatQuery: IChatQuery = new ChatQuery();
 const chatServices: IChatServices = new ChatServices(chatCommand, chatQuery);
 
+const nostificationClient = new NotificationClientMicroservice();
+
 function ChatSocket(io: Server) {
     // Deberia utilizar el tipo correcto
-    // io.engine.use((req: any, res: any, next: any) => {
-    //     console.log(req.headers.authorization);
-    //     const isHandshake = req._query.sid === undefined;
-    //     if (isHandshake) {
-    //         passport.authenticate("jwt", { session: false })(req, res, next);
-    //     } else {
-    //         next();
-    //     }
-    // });
+    io.engine.use((req: any, res: any, next: any) => {
+        const isHandshake = req._query.sid === undefined;
+        if (isHandshake) {
+            passport.authenticate("jwt", { session: false })(req, res, next);
+        } else {
+            next();
+        }
+    });
 
     io.on('connection', function (socket) {
         console.log('A user connected');
-        console.log(socket.handshake.headers.authorization)
         const user = socket.request.user;
         if (user) {
             console.log('User id: ', user.id);
@@ -45,8 +48,11 @@ function ChatSocket(io: Server) {
                 socket.to(chatId).emit('msg', createdMessage);
             }
             else {
-                // TODO
-                // Crear notificacion en el microservicio de notificaciones
+                const createNotificationRequest = new CreateNotificationRequest(msg.receiverUserId, 'Tenes un nuevo mensaje', 'message');
+                if(msg.media) createNotificationRequest.hasImage = true;                
+                const authorization = socket.handshake.headers.authorization;
+                if(!authorization) throw new UnauthorizedException('No esta autorizado');
+                nostificationClient.createNotification(createNotificationRequest, authorization);                
             }
         })
     })

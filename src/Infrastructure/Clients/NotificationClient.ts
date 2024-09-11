@@ -1,11 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 import CreateNotificationRequest from './Requests/CreateNotificationRequest';
+import ConflictException from '../../Application/Exceptions/ConflictException';
 
 
 class NotificationClientMicroservice {
 
     async createNotification(notificationRequest: CreateNotificationRequest, authorization: string): Promise<AxiosResponse> {
         try {
+            console.log(authorization);
             const headers =
             {
                 'Content-Type': 'application/json',
@@ -17,7 +19,7 @@ class NotificationClientMicroservice {
                 });
             return response;
         } catch (err: any) {            
-            throw new Error(err)
+            console.error(err);
         }
     }
 }
