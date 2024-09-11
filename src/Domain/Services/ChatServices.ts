@@ -11,8 +11,7 @@ import { writeFile } from 'fs/promises';
 import path from 'path';
 import Media from "../Entities/Media";
 import {fileTypeFromBuffer} from 'file-type';
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import ConflictException from "../../Application/Exceptions/ConflictException";
     
 const __dirname = import.meta.dirname;
 class ChatServices implements IChatServices {
@@ -29,10 +28,10 @@ class ChatServices implements IChatServices {
     async sendMessage(incomingMessageDTO: IncomingMessageDTO): Promise<Message> {
         const message: Message = new Message(incomingMessageDTO.userId, incomingMessageDTO.content)
         if (incomingMessageDTO.media) {
-            const generatedName = `${Date.now()}` + `${incomingMessageDTO.chatId}` + '.jpg';
             const buffer = Buffer.from(incomingMessageDTO.media.buffer);
             const fileType = await fileTypeFromBuffer(buffer);
-            console.log(fileType)
+            if(!fileType) throw new ConflictException('File without extension');
+            const generatedName = `${Date.now()}` + `${incomingMessageDTO.chatId}` + `.${fileType.ext}`;
             const baseDirectory = path.join(__dirname, `../../../../FrontEnd/public/chats/${incomingMessageDTO.chatId}`)
             if (!fs.existsSync(baseDirectory)) {
                 fs.mkdirSync(baseDirectory);
