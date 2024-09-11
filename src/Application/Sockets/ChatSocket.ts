@@ -15,23 +15,25 @@ const chatServices: IChatServices = new ChatServices(chatCommand, chatQuery);
 
 function ChatSocket(io: Server) {
     // Deberia utilizar el tipo correcto
-    io.engine.use((req: any, res: any, next: any) => {
-        const isHandshake = req._query.sid === undefined;
-        if (isHandshake) {
-            passport.authenticate("jwt", { session: false })(req, res, next);
-        } else {
-            next();
-        }
-    });
+    // io.engine.use((req: any, res: any, next: any) => {
+    //     console.log(req.headers.authorization);
+    //     const isHandshake = req._query.sid === undefined;
+    //     if (isHandshake) {
+    //         passport.authenticate("jwt", { session: false })(req, res, next);
+    //     } else {
+    //         next();
+    //     }
+    // });
 
     io.on('connection', function (socket) {
         console.log('A user connected');
+        console.log(socket.handshake.headers.authorization)
         const user = socket.request.user;
         if (user) {
             console.log('User id: ', user.id);
         }
         socket.on('join', async (chatId) => {
-            console.log('A user joined a room');
+            console.log(`A user joined the room: ${chatId}`);
             socket.join(chatId);
         })
         socket.on('msg', async (msg: IncomingMessageDTO, chatId: string) => {
