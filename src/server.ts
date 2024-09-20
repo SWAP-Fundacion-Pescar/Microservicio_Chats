@@ -19,7 +19,7 @@ const server = createServer(app);
 const io = new Server(server,
     {
         cors: {
-            origin: "http://localhost:3009"
+            origin: "http://localhost:3005"
         },
         maxHttpBufferSize: 4e6 // 4Mb
     });

@@ -40,12 +40,14 @@ function ChatSocket(io: Server) {
             socket.join(chatId);
         })
         socket.on('msg', async (msg: IncomingMessageDTO, chatId: string) => {
+            console.log(msg);
+            console.log(chatId);
             const createdMessage = await chatServices.sendMessage(msg);
             const sockets = await io.in(chatId).fetchSockets();
             // Si hay mas de un socket por mismo usuario puede generar duplicados
             if (sockets.length > 1) {
                 // Tal vez es necesario eliminar la propiedad IsRead al enviarlo
-                socket.to(chatId).emit('msg', createdMessage);
+                io.to(chatId).emit('msg', createdMessage);
             }
             else {
                 const createNotificationRequest = new CreateNotificationRequest(msg.receiverUserId, 'Tenes un nuevo mensaje', 'message');
