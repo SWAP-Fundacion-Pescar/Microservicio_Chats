@@ -13,7 +13,7 @@ const messageSchema: Schema<IMessageDocument> = new mongoose.Schema(
     {
         userId: { type: String, required: true},
         content: { type: String },
-        createdAt: { type: Date, default: Date.now()},
+        createdAt: { type: Date, default: Date.now},
         isRead: { type: Boolean, defualt: false },
         media: { type: mediaSchema },
     });

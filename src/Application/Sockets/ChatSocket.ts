@@ -10,6 +10,7 @@ import IncomingMessageDTO from "../DTO/IncomingMessageDTO";
 import NotificationClientMicroservice from "../../Infrastructure/Clients/NotificationClient";
 import CreateNotificationRequest from "../../Infrastructure/Clients/Requests/CreateNotificationRequest";
 import UnauthorizedException from "../Exceptions/UnauthorizedException";
+import ReadMessageRequest from "../Requests/ReadMessageRequest";
 
 
 const chatCommand: IChatCommand = new ChatCommand();
@@ -54,9 +55,14 @@ function ChatSocket(io: Server) {
                 if(msg.media) createNotificationRequest.hasImage = true;                
                 const authorization = socket.handshake.headers.authorization;
                 if(!authorization) throw new UnauthorizedException('No esta autorizado');
-                nostificationClient.createNotification(createNotificationRequest, authorization);                
+                nostificationClient.createNotification(createNotificationRequest, authorization);   
+                io.to(chatId).emit('msg', createdMessage);
             }
-        })
+        });
+        socket.on('read', async (msg: ReadMessageRequest) => 
+            {
+                await chatServices.readMessage(msg.messageId, msg.chatId);
+            })
     })
 }
 export default ChatSocket;
