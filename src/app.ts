@@ -4,6 +4,8 @@ import ChatRouter from './Application/Routers/ChatRouter';
 import errorHandler from './Application/Middleware/ErrorHandler';
 import MongoDB from './Infrastructure/Persistence/Config/MongoDB';
 import morgan from 'morgan';
+import dotenv from 'dotenv';
+dotenv.config();
 MongoDB();
 const app = express()
 app.use(express.static('public'))

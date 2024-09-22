@@ -1,16 +1,18 @@
 import mongoose from "mongoose";
-
-const MongoDB = async (): Promise<void> => 
-    {
-        try
-        {
-            await mongoose.connect("mongodb://localhost:27017/MicroservicioChat");
+import ConflictException from "../../../Application/Exceptions/ConflictException";
+const MongoDB = async (): Promise<void> => {
+    try {
+        if (process.env.MONGODB) {
+            await mongoose.connect(process.env.MONGODB);
             console.log("Se ha conectado la base de datos");
         }
-        catch (error: any)
-        {   
-            console.error("MongoDB connection failed:", error.message);
-            process.exit(1);
+        else {
+            throw new ConflictException('No se especifico ninguna url');
         }
     }
+    catch (error: any) {
+        console.error("MongoDB connection failed:", error.message);
+        process.exit(1);
+    }
+}
 export default MongoDB;

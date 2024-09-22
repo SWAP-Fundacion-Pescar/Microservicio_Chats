@@ -5,20 +5,26 @@ import ConflictException from '../../Application/Exceptions/ConflictException';
 
 class NotificationClientMicroservice {
 
-    async createNotification(notificationRequest: CreateNotificationRequest, authorization: string): Promise<AxiosResponse> {
+    async createNotification(notificationRequest: CreateNotificationRequest, authorization: string): Promise<AxiosResponse | void> {
         try {
-            console.log(authorization);
-            const headers =
-            {
-                'Content-Type': 'application/json',
-                'Authorization': authorization
-            }
-            const response = await axios.post(`http://localhost:3004/api/notification`, notificationRequest, 
+            if (process.env.NOTIFICATIONMS) {
+                const headers =
                 {
-                    headers: headers
-                });
-            return response;
-        } catch (err: any) {            
+                    'Content-Type': 'application/json',
+                    'Authorization': authorization
+                }
+                const response = await axios.post(`${process.env.NOTIFICATIONMS}/notification`, notificationRequest,
+                    {
+                        headers: headers
+                    });
+                return response;
+            }
+            else
+            {
+                throw new ConflictException('No se especifico ninguna url para el ms de notificaciones')
+            }
+
+        } catch (err: any) {
             console.error(err);
         }
     }

@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import axios from "axios";
+import ConflictException from "../../Application/Exceptions/ConflictException";
 
 const JWT_SECRET = 'your_very_secure_and_long_random_string';
 
@@ -9,13 +10,18 @@ const opts = {
     secretOrKey: JWT_SECRET
 };
 passport.use(new JwtStrategy(opts, async (jwtPayload, done) => {
-    try
-    {
-        const response = await axios.get(`http://localhost:3000/api/users/${jwtPayload.id}`);
-        if (response) {
-            return done(null, response.data);
+    try {
+        if (process.env.USERMS) {
+            const response = await axios.get(`${process.env.USERMS}/users/${jwtPayload.id}`);
+            if (response) {
+                return done(null, response.data);
+            }
+            return done(null, false, { message: 'No esta autorizado' });
         }
-        return done(null, false, { message: 'No esta autorizado'});
+        else
+        {
+            throw new ConflictException('No se especifico ninguna url para el ms de usuarios')
+        }
     } catch (err) {
         return done(err, false);
     }
