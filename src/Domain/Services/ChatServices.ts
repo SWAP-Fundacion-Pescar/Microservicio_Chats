@@ -32,18 +32,19 @@ class ChatServices implements IChatServices {
         const message: Message = new Message(incomingMessageDTO.userId, incomingMessageDTO.content);
     
         if (incomingMessageDTO.media) {
-            const buffer = Buffer.from(incomingMessageDTO.media.buffer);
-            // const fileType = await fileTypeFromBuffer(buffer);
-            // if (!fileType) throw new ConflictException('File without extension');
-    
-            // Function to upload using Cloudinary's upload_stream with Promises
+            const buffer = Buffer.from(incomingMessageDTO.media.content, 'base64');
+            const fileType = await fileTypeFromBuffer(buffer);
+            console.log(fileType);
+            if (!fileType) throw new ConflictException('File without extension');
+            let fileExtension = fileType.ext;            
             const uploadToCloudinary = (buffer: Buffer) => {
                 return new Promise((resolve, reject) => {
                     const uploadStream = cloudinary.uploader.upload_stream(
                         {
                             resource_type: 'auto',
                             folder: `chats/${incomingMessageDTO.chatId}`,
-                            public_id: `${Date.now()}_${incomingMessageDTO.chatId}`                            
+                            public_id: `${Date.now()}_${incomingMessageDTO.chatId}`,
+                            format: fileExtension,                       
                         },
                         (error, result) => {
                             if (error) {
@@ -54,18 +55,15 @@ class ChatServices implements IChatServices {
                         }
                     );
                     
-                    // Convert the buffer into a readable stream and pipe it to Cloudinary
                     const readableStream = new Readable();
                     readableStream.push(buffer);
-                    readableStream.push(null); // Indicate the end of the stream
+                    readableStream.push(null);  
                     readableStream.pipe(uploadStream);
                 });
             };
     
-            // Upload the media to Cloudinary
             const result: any = await uploadToCloudinary(buffer);
     
-            // Use the secure_url from Cloudinary
             const messageMedia: Media = new Media(result.secure_url, 'image');
             message.media = messageMedia;
         }
@@ -75,16 +73,13 @@ class ChatServices implements IChatServices {
         return retrievedMessage;
     }
     async deleteChat(chatId: string): Promise<void> {
-        // Delete the chat itself using your existing command
         await this.chatCommand.deleteChat(chatId);
 
-        // Get all resources (media files) in the specific chat folder in Cloudinary
         const resources = await cloudinary.api.resources({
             type: 'upload',
-            prefix: `chats/${chatId}`,  // This targets files stored under the folder chats/{chatId}
+            prefix: `chats/${chatId}`,  
         });
 
-        // Delete each resource found in the Cloudinary folder
         for (const resource of resources.resources) {
             await cloudinary.uploader.destroy(resource.public_id, (error: any, result: any) => {
                 if (error) {
@@ -94,7 +89,6 @@ class ChatServices implements IChatServices {
             });
         }
 
-        // (Optional) Delete the folder itself if necessary, though Cloudinary auto-manages empty folders
         await cloudinary.api.delete_folder(`chats/${chatId}`);
     }
     async getChatByUserId(userId: string): Promise<Array<Chat>> {
