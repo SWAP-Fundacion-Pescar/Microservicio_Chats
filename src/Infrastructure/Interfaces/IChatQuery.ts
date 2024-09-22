@@ -1,4 +1,4 @@
-import IChatDocument from "./IChatModelDocument";
+import IChatDocument from "./IChatModelDocument.js";
 
 interface IChatQuery
 {

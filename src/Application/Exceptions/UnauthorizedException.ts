@@ -1,4 +1,4 @@
-import BaseException from "./BaseException";
+import BaseException from "./BaseException.js";
 class UnauthorizedException extends BaseException {
     constructor(message: string = "Unauthorized access") {
         super(message);

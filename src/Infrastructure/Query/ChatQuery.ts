@@ -1,7 +1,7 @@
-import NotFoundException from "../../Application/Exceptions/NotFoundException";
-import IChatDocument from "../Interfaces/IChatModelDocument";
-import IChatQuery from "../Interfaces/IChatQuery";
-import ChatModel from "../Persistence/Models/ChatModel";
+import NotFoundException from "../../Application/Exceptions/NotFoundException.js";
+import IChatDocument from "../Interfaces/IChatModelDocument.js";
+import IChatQuery from "../Interfaces/IChatQuery.js";
+import ChatModel from "../Persistence/Models/ChatModel.js";
 
 class ChatQuery implements IChatQuery {
     async getChatByUserId(userId: string): Promise<Array<IChatDocument>> {

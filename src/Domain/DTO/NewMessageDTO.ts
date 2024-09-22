@@ -1,4 +1,4 @@
-import Message from "../Entities/Message";
+import Message from "../Entities/Message.js";
 
 class NewMessageDTO
 {

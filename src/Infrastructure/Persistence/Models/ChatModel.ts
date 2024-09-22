@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types } from "mongoose";
-import IChatDocument from "../../Interfaces/IChatModelDocument";
-import { messageSchema } from "./MessageModel";
+import IChatDocument from "../../Interfaces/IChatModelDocument.js";
+import { messageSchema } from "./MessageModel.js";
 
 const chatSchema: Schema<IChatDocument> = new mongoose.Schema(
     {

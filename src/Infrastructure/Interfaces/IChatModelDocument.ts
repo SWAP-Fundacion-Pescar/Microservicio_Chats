@@ -1,5 +1,5 @@
 import { Document, Types } from "mongoose";
-import IMessageDocument from "./IMessageDocument";
+import IMessageDocument from "./IMessageDocument.js";
 
 interface IChatDocument extends Document
 {

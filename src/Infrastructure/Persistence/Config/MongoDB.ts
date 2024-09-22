@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import ConflictException from "../../../Application/Exceptions/ConflictException";
+import ConflictException from "../../../Application/Exceptions/ConflictException.js";
 const MongoDB = async (): Promise<void> => {
     try {
         if (process.env.MONGODB) {

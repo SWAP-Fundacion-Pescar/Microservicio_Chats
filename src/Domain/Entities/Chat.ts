@@ -1,4 +1,4 @@
-import Message from "./Message";
+import Message from "./Message.js";
 class Chat
 {
     id?: string;

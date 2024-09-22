@@ -1,12 +1,12 @@
-import NotFoundException from "../../Application/Exceptions/NotFoundException";
-import CreateChatRequest from "../../Application/Requests/CreateChatRequest";
-import NewMessageDTO from "../../Domain/DTO/NewMessageDTO";
-import Message from "../../Domain/Entities/Message";
-import IChatCommand from "../Interfaces/IChatCommand";
-import IChatDocument from "../Interfaces/IChatModelDocument";
-import IMessageDocument from "../Interfaces/IMessageDocument";
-import ChatModel from "../Persistence/Models/ChatModel";
-import { MessageModel } from "../Persistence/Models/MessageModel";
+import NotFoundException from "../../Application/Exceptions/NotFoundException.js";
+import CreateChatRequest from "../../Application/Requests/CreateChatRequest.js";
+import NewMessageDTO from "../../Domain/DTO/NewMessageDTO.js";
+import Message from "../../Domain/Entities/Message.js";
+import IChatCommand from "../Interfaces/IChatCommand.js";
+import IChatDocument from "../Interfaces/IChatModelDocument.js";
+import IMessageDocument from "../Interfaces/IMessageDocument.js";
+import ChatModel from "../Persistence/Models/ChatModel.js";
+import { MessageModel } from "../Persistence/Models/MessageModel.js";
 
 class ChatCommand implements IChatCommand
 {

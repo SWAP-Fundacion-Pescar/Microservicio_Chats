@@ -1,14 +1,14 @@
-import IncomingMessageDTO from "../../Application/DTO/IncomingMessageDTO";
-import CreateChatRequest from "../../Application/Requests/CreateChatRequest";
-import IChatCommand from "../../Infrastructure/Interfaces/IChatCommand";
-import IChatQuery from "../../Infrastructure/Interfaces/IChatQuery";
-import NewMessageDTO from "../DTO/NewMessageDTO";
-import Chat from "../Entities/Chat";
-import Message from "../Entities/Message";
-import IChatServices from "../Interfaces/IChatServices";
-import Media from "../Entities/Media";
+import IncomingMessageDTO from "../../Application/DTO/IncomingMessageDTO.js";
+import CreateChatRequest from "../../Application/Requests/CreateChatRequest.js";
+import IChatCommand from "../../Infrastructure/Interfaces/IChatCommand.js";
+import IChatQuery from "../../Infrastructure/Interfaces/IChatQuery.js";
+import NewMessageDTO from "../DTO/NewMessageDTO.js";
+import Chat from "../Entities/Chat.js";
+import Message from "../Entities/Message.js";
+import IChatServices from "../Interfaces/IChatServices.js";
+import Media from "../Entities/Media.js";
 import { fileTypeFromBuffer } from 'file-type';
-import ConflictException from "../../Application/Exceptions/ConflictException";
+import ConflictException from "../../Application/Exceptions/ConflictException.js";
 import { v2 as cloudinary } from 'cloudinary';
 import { Readable } from 'stream';
 

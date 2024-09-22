@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import IMediaDocument from "./IMediaDocument";
+import IMediaDocument from "./IMediaDocument.js";
 interface IMessageDocument extends Document
 {
     userId: string;

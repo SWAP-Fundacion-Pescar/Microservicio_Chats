@@ -1,7 +1,7 @@
-import app from "./app"
+import app from "./app.js"
 import { createServer, IncomingMessage } from 'node:http';
 import { Server } from "socket.io";
-import ChatSocket from "./Application/Sockets/ChatSocket";
+import ChatSocket from "./Application/Sockets/ChatSocket.js";
 
 interface User
 {

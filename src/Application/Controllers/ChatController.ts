@@ -1,8 +1,8 @@
 import {Request, Response, NextFunction} from 'express';
-import IChatServices from "../../Domain/Interfaces/IChatServices";
-import CreateChatRequest from '../Requests/CreateChatRequest';
-import Chat from '../../Domain/Entities/Chat';
-import ReadMessageRequest from '../Requests/ReadMessageRequest';
+import IChatServices from "../../Domain/Interfaces/IChatServices.js";
+import CreateChatRequest from '../Requests/CreateChatRequest.js';
+import Chat from '../../Domain/Entities/Chat.js';
+import ReadMessageRequest from '../Requests/ReadMessageRequest.js';
 
 class ChatController 
 {

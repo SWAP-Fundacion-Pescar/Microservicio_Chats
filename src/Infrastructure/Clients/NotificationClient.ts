@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import CreateNotificationRequest from './Requests/CreateNotificationRequest';
-import ConflictException from '../../Application/Exceptions/ConflictException';
+import CreateNotificationRequest from './Requests/CreateNotificationRequest.js';
+import ConflictException from '../../Application/Exceptions/ConflictException.js';
 
 
 class NotificationClientMicroservice {

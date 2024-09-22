@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import IMessageDocument from "../../Interfaces/IMessageDocument";
-import IMediaDocument from "../../Interfaces/IMediaDocument";
+import IMessageDocument from "../../Interfaces/IMessageDocument.js";
+import IMediaDocument from "../../Interfaces/IMediaDocument.js";
 
 const mediaSchema: Schema<IMediaDocument> = new mongoose.Schema(
     {

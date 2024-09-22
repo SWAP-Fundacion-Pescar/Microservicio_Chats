@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import axios from "axios";
-import ConflictException from "../../Application/Exceptions/ConflictException";
+import ConflictException from "../../Application/Exceptions/ConflictException.js";
 
 const JWT_SECRET = 'your_very_secure_and_long_random_string';
 

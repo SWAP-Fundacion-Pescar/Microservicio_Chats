@@ -1,14 +1,14 @@
 import { Router } from "express";
-import IChatQuery from "../../Infrastructure/Interfaces/IChatQuery";
-import ChatQuery from "../../Infrastructure/Query/ChatQuery";
-import IChatCommand from "../../Infrastructure/Interfaces/IChatCommand";
-import ChatCommand from "../../Infrastructure/Command/ChatCommand";
-import ChatController from "../Controllers/ChatController";
-import IChatServices from "../../Domain/Interfaces/IChatServices";
-import ChatServices from "../../Domain/Services/ChatServices";
-import { validateCreateChat, validateReadMessage, validateDeleteChat } from "../Middleware/Validator/ChatValidator";
-import { authenticateJwt } from "../Middleware/PassportMiddleware";
-import validationErrorHandler from "../Middleware/Validator/ValidationErrorHandler";
+import IChatQuery from "../../Infrastructure/Interfaces/IChatQuery.js";
+import ChatQuery from "../../Infrastructure/Query/ChatQuery.js";
+import IChatCommand from "../../Infrastructure/Interfaces/IChatCommand.js";
+import ChatCommand from "../../Infrastructure/Command/ChatCommand.js";
+import ChatController from "../Controllers/ChatController.js";
+import IChatServices from "../../Domain/Interfaces/IChatServices.js";
+import ChatServices from "../../Domain/Services/ChatServices.js";
+import { validateCreateChat, validateReadMessage, validateDeleteChat } from "../Middleware/Validator/ChatValidator.js";
+import { authenticateJwt } from "../Middleware/PassportMiddleware.js";
+import validationErrorHandler from "../Middleware/Validator/ValidationErrorHandler.js";
 
 
 

@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import ChatRouter from './Application/Routers/ChatRouter';
-import errorHandler from './Application/Middleware/ErrorHandler';
-import MongoDB from './Infrastructure/Persistence/Config/MongoDB';
+import ChatRouter from './Application/Routers/ChatRouter.js';
+import errorHandler from './Application/Middleware/ErrorHandler.js';
+import MongoDB from './Infrastructure/Persistence/Config/MongoDB.js';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 dotenv.config();

@@ -1,7 +1,7 @@
-import IncomingMessageDTO from "../../Application/DTO/IncomingMessageDTO";
-import CreateChatRequest from "../../Application/Requests/CreateChatRequest";
-import Chat from "../Entities/Chat";
-import Message from "../Entities/Message";
+import IncomingMessageDTO from "../../Application/DTO/IncomingMessageDTO.js";
+import CreateChatRequest from "../../Application/Requests/CreateChatRequest.js";
+import Chat from "../Entities/Chat.js";
+import Message from "../Entities/Message.js";
 
 interface IChatServices
 {

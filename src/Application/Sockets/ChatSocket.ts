@@ -1,16 +1,16 @@
 import { Server } from "socket.io";
-import passport from '../../Infrastructure/Config/Passport'
-import IChatCommand from "../../Infrastructure/Interfaces/IChatCommand";
-import ChatCommand from "../../Infrastructure/Command/ChatCommand";
-import ChatQuery from "../../Infrastructure/Query/ChatQuery";
-import IChatQuery from "../../Infrastructure/Interfaces/IChatQuery";
-import IChatServices from "../../Domain/Interfaces/IChatServices";
-import ChatServices from "../../Domain/Services/ChatServices";
-import IncomingMessageDTO from "../DTO/IncomingMessageDTO";
-import NotificationClientMicroservice from "../../Infrastructure/Clients/NotificationClient";
-import CreateNotificationRequest from "../../Infrastructure/Clients/Requests/CreateNotificationRequest";
-import UnauthorizedException from "../Exceptions/UnauthorizedException";
-import ReadMessageRequest from "../Requests/ReadMessageRequest";
+import passport from '../../Infrastructure/Config/Passport.js'
+import IChatCommand from "../../Infrastructure/Interfaces/IChatCommand.js";
+import ChatCommand from "../../Infrastructure/Command/ChatCommand.js";
+import ChatQuery from "../../Infrastructure/Query/ChatQuery.js";
+import IChatQuery from "../../Infrastructure/Interfaces/IChatQuery.js";
+import IChatServices from "../../Domain/Interfaces/IChatServices.js";
+import ChatServices from "../../Domain/Services/ChatServices.js";
+import IncomingMessageDTO from "../DTO/IncomingMessageDTO.js";
+import NotificationClientMicroservice from "../../Infrastructure/Clients/NotificationClient.js";
+import CreateNotificationRequest from "../../Infrastructure/Clients/Requests/CreateNotificationRequest.js";
+import UnauthorizedException from "../Exceptions/UnauthorizedException.js";
+import ReadMessageRequest from "../Requests/ReadMessageRequest.js";
 
 
 const chatCommand: IChatCommand = new ChatCommand();

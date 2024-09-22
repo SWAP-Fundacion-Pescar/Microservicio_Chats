@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import NotFoundException from "../Exceptions/NotFoundException";
-import ValidationException from "../Exceptions/ValidationException";
+import NotFoundException from "../Exceptions/NotFoundException.js";
+import ValidationException from "../Exceptions/ValidationException.js";
 import { MongooseError } from "mongoose";
 import { MongoServerError } from 'mongodb';
-import UnauthorizedException from "../Exceptions/UnauthorizedException";
+import UnauthorizedException from "../Exceptions/UnauthorizedException.js";
 
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction): void => 
     {

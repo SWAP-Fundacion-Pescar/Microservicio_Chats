@@ -1,7 +1,7 @@
-import CreateChatRequest from "../../Application/Requests/CreateChatRequest";
-import NewMessageDTO from "../../Domain/DTO/NewMessageDTO";
-import Message from "../../Domain/Entities/Message";
-import IChatDocument from "./IChatModelDocument";
+import CreateChatRequest from "../../Application/Requests/CreateChatRequest.js";
+import NewMessageDTO from "../../Domain/DTO/NewMessageDTO.js";
+import Message from "../../Domain/Entities/Message.js";
+import IChatDocument from "./IChatModelDocument.js";
 
 interface IChatCommand
 {
