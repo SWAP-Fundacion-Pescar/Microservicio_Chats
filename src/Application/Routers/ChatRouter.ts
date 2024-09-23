@@ -21,5 +21,6 @@ ChatRouter.post('/chat', validateCreateChat, validationErrorHandler, chatControl
 ChatRouter.delete('/chat/:chatId', validateDeleteChat, validationErrorHandler, chatController.deleteChat);
 ChatRouter.get('/chats/:userId', chatController.getChatsByUserId);
 ChatRouter.put('/chats/read', validateReadMessage, validationErrorHandler, chatController.readMessage);
+ChatRouter.put('/chat/state', chatController.updateConfirmationState)
 
 export default ChatRouter;

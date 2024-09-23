@@ -3,6 +3,7 @@ import IChatServices from "../../Domain/Interfaces/IChatServices.js";
 import CreateChatRequest from '../Requests/CreateChatRequest.js';
 import Chat from '../../Domain/Entities/Chat.js';
 import ReadMessageRequest from '../Requests/ReadMessageRequest.js';
+import UpdateConfirmationStateRequest from '../Requests/UpdateConfirmationStateRequest.js';
 
 class ChatController 
 {
@@ -14,6 +15,7 @@ class ChatController
         this.deleteChat = this.deleteChat.bind(this);
         this.getChatsByUserId = this.getChatsByUserId.bind(this);     
         this.readMessage = this.readMessage.bind(this);   
+        this.updateConfirmationState = this.updateConfirmationState.bind(this);
     }
     async createChat(req: Request, res: Response, next: NextFunction): Promise<void>
     {
@@ -62,6 +64,20 @@ class ChatController
             res.status(200).send('Ok.');
         }catch (error){
             next(error);
+        }
+    }
+    async updateConfirmationState(req: Request, res: Response, next: NextFunction): Promise<void>
+    {
+        try
+        {
+            const { chatId, senderUserExchangeConfirmation, receiverUserExchangeConfirmation } : UpdateConfirmationStateRequest = req.body;
+            const updateConfirmationStateRequest = new UpdateConfirmationStateRequest(chatId, senderUserExchangeConfirmation, receiverUserExchangeConfirmation);
+            const updatedChat = await this.chatServices.updateConfirmationState(updateConfirmationStateRequest);
+            res.status(200).send(updatedChat);
+        }
+        catch(error)
+        {
+            next(error)
         }
     }
 }

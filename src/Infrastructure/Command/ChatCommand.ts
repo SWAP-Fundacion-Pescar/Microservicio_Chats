@@ -1,5 +1,6 @@
 import NotFoundException from "../../Application/Exceptions/NotFoundException.js";
 import CreateChatRequest from "../../Application/Requests/CreateChatRequest.js";
+import UpdateConfirmationStateRequest from "../../Application/Requests/UpdateConfirmationStateRequest.js";
 import NewMessageDTO from "../../Domain/DTO/NewMessageDTO.js";
 import Message from "../../Domain/Entities/Message.js";
 import IChatCommand from "../Interfaces/IChatCommand.js";
@@ -34,6 +35,20 @@ class ChatCommand implements IChatCommand
         if(!message) throw new NotFoundException('No se encontro el mensaje');
         message.isRead = true;
         await retrievedChat.save();
+    }
+    async updateConfirmationState(updateConfirmationStateRequest: UpdateConfirmationStateRequest): Promise<IChatDocument>
+    {
+        const updatedChat = await ChatModel.findById(updateConfirmationStateRequest.chatId);
+        if(!updatedChat) throw new NotFoundException('No se encontro el chat');        
+        if(updateConfirmationStateRequest.senderUserExchangeConfirmation)
+            {
+                updatedChat.senderUserExchangeConfirmation = updateConfirmationStateRequest.senderUserExchangeConfirmation;
+            }
+        if(updateConfirmationStateRequest.receiverUserExchangeConfirmation)
+        {
+            updatedChat.receiverUserExchangeConfirmation = updateConfirmationStateRequest.receiverUserExchangeConfirmation;
+        };
+        return updatedChat;
     }
 }
 export default ChatCommand;

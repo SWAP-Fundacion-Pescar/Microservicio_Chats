@@ -11,6 +11,7 @@ import { fileTypeFromBuffer } from 'file-type';
 import ConflictException from "../../Application/Exceptions/ConflictException.js";
 import { v2 as cloudinary } from 'cloudinary';
 import { Readable } from 'stream';
+import UpdateConfirmationStateRequest from "../../Application/Requests/UpdateConfirmationStateRequest.js";
 
 cloudinary.config({
     cloud_name: 'dojyoiv2g',
@@ -98,5 +99,11 @@ class ChatServices implements IChatServices {
     async readMessage(messageId: string, chatId: string): Promise<void> {
         await this.chatCommand.readMessage(messageId, chatId);
     }
+    async updateConfirmationState(updateConfirmationStateRequest: UpdateConfirmationStateRequest): Promise<Chat>
+    {
+        const updatedChat = await this.chatCommand.updateConfirmationState(updateConfirmationStateRequest);
+        return updatedChat;
+    }
+
 }
 export default ChatServices;
