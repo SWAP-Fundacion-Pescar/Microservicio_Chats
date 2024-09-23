@@ -54,7 +54,7 @@ function ChatSocket(io: Server) {
                 let message;
                 if(msg.content) message = msg.content;
                 else message = 'Mensaje'
-                const createNotificationRequest = new CreateNotificationRequest(msg.receiverUserId, message, 'message');
+                const createNotificationRequest = new CreateNotificationRequest(msg.receiverUserId, {chatId: msg.chatId} , message, 'message');
                 if(msg.media) createNotificationRequest.hasImage = true;                
                 const authorization = socket.handshake.headers.authorization;
                 if(!authorization) throw new UnauthorizedException('No esta autorizado');
